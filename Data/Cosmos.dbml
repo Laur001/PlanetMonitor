@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Cosmos" Class="CosmosDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-QCAEIQC;Initial Catalog=Cosmos;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="Cosmos.Properties.Settings" SettingsPropertyName="CosmosConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CelestialBodies" Member="CelestialBodies">
+    <Type Name="CelestialBody">
+      <Column Name="BodyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="CelestialBody_Observation" Member="Observations" ThisKey="BodyId" OtherKey="BodyId" Type="Observation" />
+      <Association Name="CelestialBody_OrbitalParameter" Member="OrbitalParameter" ThisKey="BodyId" OtherKey="BodyId" Type="OrbitalParameter" Cardinality="One" />
+      <Association Name="CelestialBody_PredictedEvent" Member="PredictedEvents" ThisKey="BodyId" OtherKey="BodyId" Type="PredictedEvent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Observations" Member="Observations">
+    <Type Name="Observation">
+      <Column Name="ObservationId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BodyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ObserverId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ObservationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="CelestialBody_Observation" Member="CelestialBody" ThisKey="BodyId" OtherKey="BodyId" Type="CelestialBody" IsForeignKey="true" />
+      <Association Name="User_Observation" Member="User" ThisKey="ObserverId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrbitalParameters" Member="OrbitalParameters">
+    <Type Name="OrbitalParameter">
+      <Column Name="BodyId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SemimajorAxis" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Eccentricity" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Inclination" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="LongitudeOfAscendingNode" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ArgumentOfPerihelion" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="MeanAnomalyAtEpoch" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Epoch" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="CelestialBody_OrbitalParameter" Member="CelestialBody" ThisKey="BodyId" OtherKey="BodyId" Type="CelestialBody" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Positions" Member="Positions">
+    <Type Name="Position">
+      <Column Name="PositionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BodyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="RightAscension" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Declination" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DistanceFromEarth" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PredictedEvents" Member="PredictedEvents">
+    <Type Name="PredictedEvent">
+      <Column Name="EventId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BodyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EventDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventDescription" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="CelestialBody_PredictedEvent" Member="CelestialBody" ThisKey="BodyId" OtherKey="BodyId" Type="CelestialBody" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_User" Member="Users" ThisKey="RoleId" OtherKey="RoleId" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="User_Observation" Member="Observations" ThisKey="UserId" OtherKey="ObserverId" Type="Observation" />
+      <Association Name="Role_User" Member="Role" ThisKey="RoleId" OtherKey="RoleId" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,72 @@
+﻿<Window x:Class="Cosmos.View.Cercetator.CercetatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cercetator" Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStyle="None"
+        MouseDown="Window_MouseDown">
+
+    <Border CornerRadius="12">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1B1448" Offset="0"/>
+                <GradientStop Color="Black" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border BorderThickness="2" CornerRadius="10">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#DA34AE" Offset="0.75"/>
+                    <GradientStop Color="#8A16C1" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- Title Bar -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Cercetator Role" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <Button x:Name="btnMinimize" Content="_" Grid.Column="1" Click="btnMinimize_Click" 
+                            Background="#462AD8" Foreground="White" FontSize="16" Style="{StaticResource TitleBarButtonStyle}"/>
+                    <Button x:Name="btnClose" Content="X" Grid.Column="2" Click="btnClose_Click" 
+                            Background="#DA34AE" Foreground="White" FontSize="12" Style="{StaticResource TitleBarButtonStyle}"/>
+                </Grid>
+
+                <!-- Main Content -->
+                <Grid Grid.Row="1" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <!-- Side Panel -->
+                        <ColumnDefinition Width="200"/>
+                        <!-- Content -->
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Refined Side Menu -->
+                    <Border Background="#2B2B2B" CornerRadius="10" BorderBrush="#462AD8" BorderThickness="2" Margin="5">
+                        <StackPanel VerticalAlignment="Stretch">
+                            <TextBlock Text="Menu" FontSize="24" Foreground="White" Margin="10" HorizontalAlignment="Center"/>
+                            <Button Content="Solar System" Command="{Binding ShowSolarSystemCommand}" 
+                                    Margin="10" Height="40" Style="{StaticResource SideMenuButtonStyle}" />
+                            <Button Content="Planet List" Command="{Binding ShowPlanetListCommand}" 
+                                    Margin="10" Height="40" Style="{StaticResource SideMenuButtonStyle}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Content Area -->
+                    <ContentControl Content="{Binding CurrentView}" Grid.Column="1" Margin="10"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

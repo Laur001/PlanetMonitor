@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Cosmos.View.Cercetator.PlanetListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+            <!-- Imaginea Planetei (bază pe nume) -->
+            <Image Source="/Images/{Binding SelectedPlanet.Name, StringFormat=ToLower}.png" 
+                   Width="200" Height="200" Margin="10" />
+
+            <!-- Detaliile Planetei -->
+            <TextBlock Text="{Binding SelectedPlanet.Name}" FontSize="24" Foreground="White" Margin="10"/>
+            <TextBlock Text="{Binding SelectedPlanet.Description}" FontSize="16" Foreground="White" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
